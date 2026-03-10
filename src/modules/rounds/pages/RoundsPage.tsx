@@ -110,8 +110,8 @@ const RoundsPage = () => {
         <div className="p-6 bg-[#f6fbf4] min-h-screen">
             <div className="flex justify-between items-center mb-8">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-800 tracking-tight">Rondas</h1>
-                    <p className="text-slate-500 text-sm mt-1">Historial y supervisión de rondas de seguridad</p>
+                    <h1 className="text-3xl font-bold text-slate-800 tracking-tight">Historial de recorridos</h1>
+                    <p className="text-slate-500 text-sm mt-1">Historial y supervisión de recorridos de seguridad</p>
                 </div>
                 <div className="flex gap-4">
                      <button 
@@ -119,7 +119,7 @@ const RoundsPage = () => {
                         className="flex items-center gap-2 bg-[#065911] text-white px-4 py-2 rounded-xl font-medium shadow-sm hover:bg-[#086f16] transition-colors"
                     >
                         <FaPlus className="text-xs" />
-                        <span>Nueva Ronda</span>
+                        <span>Nuevo recorrido</span>
                     </button>
                     <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">
                         <FaCalendarAlt className="text-slate-400" />

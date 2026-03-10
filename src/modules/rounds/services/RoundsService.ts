@@ -13,6 +13,14 @@ export interface IRound {
       title: string;
       startTime?: string;
       endTime?: string;
+      recurringLocations?: Array<{
+         id: number;
+         locationId: number;
+         location: {
+           id: number;
+           name: string;
+         }
+      }>;
   };
   guard: {
     id: number;

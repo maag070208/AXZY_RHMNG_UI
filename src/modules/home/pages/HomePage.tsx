@@ -43,8 +43,8 @@ const HomePage = () => {
         action: () => navigate("/maintenances"),
       },
       {
-        title: "Rondas",
-        description: "Registro y control de rondas",
+        title: "Historial de recorridos",
+        description: "Registro y control de recorridos",
         icon: <FaClock className="text-white" />,
         action: () => navigate("/rounds"),
       },
@@ -66,7 +66,7 @@ const HomePage = () => {
             },
             {
               title: "Rutas",
-              description: "Configuración de rutas de rondas",
+              description: "Configuración de rutas de recorridos",
               icon: <FaRoute className="text-white" />,
               action: () => navigate("/routes"),
             }

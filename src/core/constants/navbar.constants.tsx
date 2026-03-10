@@ -68,7 +68,7 @@ export const useNavigationItems = (): any[] => {
     },
     {
       id: "rounds",
-      label: "Rondas",
+      label: "Historial de recorridos",
       action: () => navigate("/rounds"),
       isActive: isRouteActive("/rounds"),
       icon: <FaClock  />,
