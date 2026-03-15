@@ -1,6 +1,6 @@
 import { AppState } from "@app/core/store/store";
 import { useEffect, useState } from "react";
-import { FaChild, FaListAlt, FaExclamationTriangle, FaBook, FaWrench, FaClock, FaRoute } from "react-icons/fa";
+import { FaChild, FaListAlt, FaExclamationTriangle, FaBook, FaWrench, FaClock, FaRoute, FaUserShield } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { HomeCardItem } from "../components/HomeCardItem";
@@ -47,6 +47,12 @@ const HomePage = () => {
         description: "Registro y control de recorridos",
         icon: <FaClock className="text-white" />,
         action: () => navigate("/rounds"),
+      },
+      {
+        title: "Guardias",
+        description: "Gestión de personal operativo",
+        icon: <FaUserShield className="text-white" />,
+        action: () => navigate("/guards"),
       },
     ];
 
