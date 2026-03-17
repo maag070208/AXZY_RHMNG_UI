@@ -304,7 +304,7 @@ const VacancyApplicantsPage = () => {
             ) : (
                 <div className="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
                     <ITTable
-                        data={applicants}
+                        data={applicants as any[]}
                         columns={[
                             { key: "id", label: "ID", type: "number", sortable: true },
                             { 
@@ -312,7 +312,7 @@ const VacancyApplicantsPage = () => {
                                 label: "Candidato", 
                                 type: "string", 
                                 sortable: true,
-                                render: (row: Applicant) => (
+                                render: (row: any) => (
                                     <div className="flex items-center gap-3">
                                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black ${getStatusColor(row.status).split(' ')[0]} ${getStatusColor(row.status).split(' ')[1]}`}>
                                             {row.firstName[0]}{row.lastName[0]}
@@ -328,7 +328,7 @@ const VacancyApplicantsPage = () => {
                                 key: "status",
                                 label: "Estado",
                                 type: "string",
-                                render: (row: Applicant) => (
+                                 render: (row: any) =>  (
                                     <div className={`inline-flex px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${getStatusColor(row.status)}`}>
                                         {getStatusLabel(row.status)}
                                     </div>
@@ -338,7 +338,7 @@ const VacancyApplicantsPage = () => {
                                 key: "interview",
                                 label: "Entrevista",
                                 type: "string",
-                                render: (row: Applicant) => {
+                                render: (row: any) => {
                                     if (row.status === 'INTERVIEW_SCHEDULED' && row.interviews && row.interviews.length > 0) {
                                         return (
                                             <div className="flex flex-col">

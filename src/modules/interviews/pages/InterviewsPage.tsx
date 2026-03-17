@@ -1,10 +1,10 @@
 import { AppState } from "@app/core/store/store";
-import { ITButton, ITDialog, ITLoader, ITTable } from "@axzydev/axzy_ui_system";
+import { showToast } from "@app/core/store/toast/toast.slice";
+import { ITDialog, ITLoader, ITTable } from "@axzydev/axzy_ui_system";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { FaEdit, FaPlus } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { showToast } from "@app/core/store/toast/toast.slice";
 import { InterviewForm } from "../components/InterviewForm";
 import { createInterview, getInterviews, Interview, updateInterview } from "../service/interviews.service";
 

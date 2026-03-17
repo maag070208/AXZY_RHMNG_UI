@@ -1,11 +1,11 @@
-import { ITButton, ITLoader } from "@axzydev/axzy_ui_system";
-import { useEffect, useState } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { getVacancyById, createVacancy, updateVacancy, Vacancy } from "../service/vacancies.service";
-import { VacancyForm } from "../components/VacancyForm";
-import { useDispatch } from "react-redux";
 import { showToast } from "@app/core/store/toast/toast.slice";
-import { FaChevronLeft, FaSave, FaRocket } from "react-icons/fa";
+import { ITLoader } from "@axzydev/axzy_ui_system";
+import { useEffect, useState } from "react";
+import { FaChevronLeft } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { VacancyForm } from "../components/VacancyForm";
+import { createVacancy, getVacancyById, updateVacancy, Vacancy } from "../service/vacancies.service";
 
 const VacancyDetailPage = () => {
   const { id } = useParams<{ id: string }>();
