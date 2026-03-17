@@ -109,43 +109,107 @@ const InterviewsPage = () => {
                     )
                 },
                 { 
-                    key: "status",
-                    label: "Estado",
+                    key: "applicantPhone", 
+                    label: "Teléfono", 
+                    type: "string",
+                    render: (row: Interview) => (
+                        <span className="text-sm font-medium text-slate-600">{row.applicant?.phone || "N/A"}</span>
+                    )
+                },
+                // { 
+                //     key: "status",
+                //     label: "Estado Entrevista",
+                //     type: "string",
+                //     render: (row: Interview) => {
+                //         const statusConfig: any = {
+                //            SCHEDULED: { label: "PROGRAMADA", class: "bg-blue-50 text-blue-600 border-blue-100" },
+                //            COMPLETED: { label: "COMPLETADA", class: "bg-emerald-50 text-emerald-600 border-emerald-100" },
+                //            CANCELLED: { label: "CANCELADA", class: "bg-red-50 text-red-600 border-red-100" },
+                //            NO_SHOW: { label: "NO ASISTIÓ", class: "bg-slate-50 text-slate-600 border-slate-100" },
+                //         };
+                //         const config = statusConfig[row.status] || { label: row.status, class: "bg-gray-50 text-gray-600" };
+                //         return (
+                //           <span className={`px-3 py-1 rounded-full text-[10px] font-black tracking-widest border ${config.class}`}>
+                //              {config.label}
+                //           </span>
+                //         );
+                //     }
+                // },
+                // {
+                //     key: "notes",
+                //     label: "Notas de Entrevista",
+                //     type: "string",
+                //     render: (row: Interview) => (
+                //         <span className="text-xs text-slate-500 italic max-w-[150px] truncate block" title={row.notes || "Sin notas"}>
+                //             {row.notes || "Sin notas"}
+                //         </span>
+                //     )
+                // },
+                {
+                    key: "applicantStatus",
+                    label: "Estado de Evaluación",
                     type: "string",
                     render: (row: Interview) => {
-                        const colors: any = {
-                           SCHEDULED: "bg-blue-100 text-blue-800",
-                           COMPLETED: "bg-green-100 text-green-800",
-                           CANCELLED: "bg-red-100 text-red-800",
-                           NO_SHOW: "bg-gray-200 text-gray-800",
+                        const getAppColor = (st: string) => {
+                            switch(st) {
+                                case "REGISTERED": return "bg-slate-100 text-slate-600 border-slate-200";
+                                case "FORM_COMPLETED": return "bg-blue-100 text-blue-600 border-blue-200";
+                                case "INTERVIEW_SCHEDULED": return "bg-purple-100 text-purple-600 border-purple-200";
+                                case "INTERVIEWED": return "bg-indigo-100 text-indigo-600 border-indigo-200";
+                                case "HIRED": return "bg-emerald-100 text-emerald-600 border-emerald-200";
+                                case "REJECTED": return "bg-rose-100 text-rose-600 border-rose-200";
+                                default: return "bg-gray-100 text-gray-600 border-gray-200";
+                            }
                         };
+                        const getAppLabel = (st: string) => {
+                            switch(st) {
+                                case "REGISTERED": return "Registrado";
+                                case "FORM_COMPLETED": return "Postulado";
+                                case "INTERVIEW_SCHEDULED": return "Cita Agendada";
+                                case "INTERVIEWED": return "Evaluado";
+                                case "HIRED": return "Contratado";
+                                case "REJECTED": return "Rechazado";
+                                default: return st || "N/A";
+                            }
+                        };
+                        const status = row.applicant?.status || "";
                         return (
-                          <span className={`px-2 py-1 rounded-full text-xs font-semibold ${colors[row.status]}`}>
-                             {row.status}
+                          <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${getAppColor(status)}`}>
+                             {getAppLabel(status)}
                           </span>
                         );
                     }
                 },
                 {
-                    key: "actions",
-                    label: "Acciones",
-                    type: "actions",
-                    actions: (row: Interview) => (
-                        <div className="flex items-center gap-2">
-                             {user?.role !== "OPERATOR" && (
-                                <ITButton
-                                    onClick={() => setEditingInterview(row)}
-                                    size="small"
-                                    variant="ghost"
-                                    className="!p-2 text-slate-500 hover:text-slate-700"
-                                    title="Editar / Actualizar Estado"
-                                >
-                                    <FaEdit />
-                                </ITButton>
-                             )}
-                        </div>
+                    key: "applicantNotes",
+                    label: "Notas de Evaluación",
+                    type: "string",
+                    render: (row: Interview) => (
+                        <span className="text-xs text-slate-500 italic max-w-[150px] truncate block" title={row.applicant?.notes || "Sin evaluación"}>
+                            {row.applicant?.notes || "-"}
+                        </span>
                     )
-                }
+                },
+                // {
+                //     key: "actions",
+                //     label: "Acciones",
+                //     type: "actions",
+                //     actions: (row: Interview) => (
+                //         <div className="flex items-center gap-2">
+                //              {user?.role !== "OPERATOR" && (
+                //                 <ITButton
+                //                     onClick={() => setEditingInterview(row)}
+                //                     size="small"
+                //                     variant="ghost"
+                //                     className="!p-2 text-slate-500 hover:text-slate-700"
+                //                     title="Editar / Actualizar Estado"
+                //                 >
+                //                     <FaEdit />
+                //                 </ITButton>
+                //              )}
+                //         </div>
+                //     )
+                // }
             ]}
             itemsPerPageOptions={[10, 20]}
             defaultItemsPerPage={10}

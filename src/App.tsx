@@ -11,8 +11,11 @@ import HomePage from "./modules/home/pages/HomePage";
 import UsersPage from "./modules/users/pages/UsersPage";
 
 import VacanciesPage from "./modules/vacancies/pages/VacanciesPage";
+import VacancyDetailPage from "./modules/vacancies/pages/VacancyDetailPage";
 import ApplicantsPage from "./modules/applicants/pages/ApplicantsPage";
+import VacancyApplicantsPage from "./modules/applicants/pages/VacancyApplicantsPage";
 import InterviewsPage from "./modules/interviews/pages/InterviewsPage";
+import CalendarPage from "./modules/calendar/pages/CalendarPage";
 
 // Public route for QR scanner application
 import ApplyPage from "./modules/applicants/pages/ApplyPage";
@@ -66,8 +69,12 @@ function App() {
         <Route element={<PrivateRoutes />}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/vacancies" element={<VacanciesPage />} />
+          <Route path="/vacancies/new" element={<VacancyDetailPage />} />
+          <Route path="/vacancies/edit/:id" element={<VacancyDetailPage />} />
+          <Route path="/vacancies/:id/applicants" element={<VacancyApplicantsPage />} />
           <Route path="/applicants" element={<ApplicantsPage />} />
           <Route path="/interviews" element={<InterviewsPage />} />
+          <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/users" element={<UsersPage />} />
           <Route path="*" element={<Navigate to="/home" />} />
         </Route>

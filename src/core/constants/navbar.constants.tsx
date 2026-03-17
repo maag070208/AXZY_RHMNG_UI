@@ -1,16 +1,12 @@
 import { AppState } from "@app/core/store/store";
 import LOGO from "@assets/logo.png";
 import {
-  FaChild,
   FaHome,
-  FaListAlt,
-  FaExclamationTriangle,
-  FaBook,
-  FaClock,
-  FaMapMarkedAlt,
-  FaSearchLocation,
-  FaWrench,
-  FaUserShield,
+  FaFileAlt,
+  FaClipboardList,
+  FaUsers,
+  FaUserPlus,
+  FaCalendarAlt,
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -40,70 +36,42 @@ export const useNavigationItems = (): any[] => {
       icon: <FaHome  />,
     },
     {
-      id: "locations",
-      label: "Ubicaciones",
-      action: () => navigate("/locations"),
-      isActive: isRouteActive("/locations"),
-      icon: <FaSearchLocation  />,
+      id: "vacancies",
+      label: "Vacantes",
+      action: () => navigate("/vacancies"),
+      isActive: isRouteActive("/vacancies"),
+      icon: <FaFileAlt />,
     },
     {
-      id: "incidents",
-      label: "Incidencias",
-      action: () => navigate("/incidents"),
-      isActive: isRouteActive("/incidents"),
-      icon: <FaExclamationTriangle  />, 
+      id: "calendar",
+      label: "Calendario",
+      action: () => navigate("/calendar"),
+      isActive: isRouteActive("/calendar"),
+      icon: <FaCalendarAlt />,
     },
     {
-      id: "maintenances",
-      label: "Mantenimientos",
-      action: () => navigate("/maintenances"),
-      isActive: isRouteActive("/maintenances"),
-      icon: <FaWrench  />, 
+      id: "applicants",
+      label: "Candidatos",
+      action: () => navigate("/applicants"),
+      isActive: isRouteActive("/applicants"),
+      icon: <FaClipboardList />,
     },
     {
-      id: "kardex",
-      label: "Kardex",
-      action: () => navigate("/kardex"),
-      isActive: isRouteActive("/kardex"),
-      icon: <FaBook  />,
-    },
-    {
-      id: "rounds",
-      label: "Historial de recorridos",
-      action: () => navigate("/rounds"),
-      isActive: isRouteActive("/rounds"),
-      icon: <FaClock  />,
-    },
-    {
-      id: "routes",
-      label: "Rutas",
-      action: () => navigate("/routes"),
-      isActive: isRouteActive("/routes"),
-      icon: <FaMapMarkedAlt  />,
-    },
-    {
-      id: "guards",
-      label: "Guardias",
-      action: () => navigate("/guards"),
-      isActive: isRouteActive("/guards"),
-      icon: <FaUserShield />,
-    },
-    {
-      id: 'schedule',
-      label: 'Horarios',
-       action: () => navigate("/schedules"),
-      isActive: isRouteActive("/schedules"),
-      icon: <FaListAlt  />,
+      id: "interviews",
+      label: "Entrevistas",
+      action: () => navigate("/interviews"),
+      isActive: isRouteActive("/interviews"),
+      icon: <FaUsers />,
     }
   ];
 
-  if (user?.role === "ADMIN" || user?.role === "LIDER") {
+  if (user?.role === "ADMIN") {
     baseItems.push({
       id: "users",
       label: "Usuarios",
       action: () => navigate("/users"),
       isActive: isRouteActive("/users"),
-      icon: <FaChild  />,
+      icon: <FaUserPlus />,
     });
   }
 

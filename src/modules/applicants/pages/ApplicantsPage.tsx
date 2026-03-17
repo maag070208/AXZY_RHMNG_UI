@@ -1,14 +1,20 @@
 import { AppState } from "@app/core/store/store";
 import { ITButton, ITDialog, ITLoader, ITTable } from "@axzydev/axzy_ui_system";
 import { useEffect, useState } from "react";
-import { FaEdit, FaEye } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { FaEdit, FaEye, FaCalendarAlt } from "react-icons/fa";
+import dayjs from "dayjs";
 import { showToast } from "@app/core/store/toast/toast.slice";
 import { Applicant, getApplicants, updateApplicantStatus } from "../service/applicants.service";
 
 const ApplicantsPage = () => {
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const vacancyIdFilter = queryParams.get("vacancyId");
+  
   const user = useSelector((state: AppState) => state.auth);
   const dispatch = useDispatch();
 
@@ -20,14 +26,18 @@ const ApplicantsPage = () => {
     setLoading(true);
     const res = await getApplicants();
     if (res.success && res.data) {
-        setApplicants(res.data);
+        let filtered = res.data;
+        if (vacancyIdFilter) {
+            filtered = res.data.filter(a => String(a.vacancyId) === vacancyIdFilter);
+        }
+        setApplicants(filtered);
     }
     setLoading(false);
   };
 
   useEffect(() => {
     fetchApplicants();
-  }, []);
+  }, [vacancyIdFilter]);
 
   const handleStatusUpdate = async () => {
       if (!editingStatus) return;
@@ -80,18 +90,36 @@ const ApplicantsPage = () => {
                     label: "Estado",
                     type: "string",
                     render: (row: Applicant) => {
-                        const colors: any = {
-                           REGISTERED: "bg-gray-100 text-gray-800",
-                           FORM_COMPLETED: "bg-blue-100 text-blue-800",
-                           INTERVIEW_SCHEDULED: "bg-purple-100 text-purple-800",
-                           INTERVIEWED: "bg-indigo-100 text-indigo-800",
-                           HIRED: "bg-green-100 text-green-800",
-                           REJECTED: "bg-red-100 text-red-800",
+                        const statusConfig: any = {
+                           REGISTERED: { label: "Registrado", color: "bg-slate-100 text-slate-800" },
+                           FORM_COMPLETED: { label: "Postulado", color: "bg-blue-100 text-blue-800" },
+                           INTERVIEW_SCHEDULED: { label: "Cita Agendada", color: "bg-emerald-100 text-emerald-800" },
+                           INTERVIEWED: { label: "Entrevistado", color: "bg-indigo-100 text-indigo-800" },
+                           HIRED: { label: "Contratado", color: "bg-green-100 text-green-800" },
+                           REJECTED: { label: "Rechazado", color: "bg-rose-100 text-rose-800" },
                         };
+                        const config = statusConfig[row.status] || { label: row.status, color: "bg-gray-100 text-gray-800" };
                         return (
-                          <span className={`px-2 py-1 rounded-full text-xs font-semibold ${colors[row.status] || 'bg-gray-100'}`}>
-                             {row.status}
+                          <span className={`px-2 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-black/5 ${config.color}`}>
+                             {config.label}
                           </span>
+                        );
+                    }
+                },
+                { 
+                    key: "interview", 
+                    label: "Cita / Entrevista", 
+                    type: "string",
+                    render: (row: Applicant) => {
+                        const interview = row.interviews?.[0];
+                        if (!interview) return <span className="text-slate-400 text-xs italic">Sin cita</span>;
+                        return (
+                            <div className="flex flex-col text-xs leading-tight">
+                                <span className="font-bold text-[#065911] flex items-center gap-1">
+                                    <FaCalendarAlt size={10} /> {dayjs(interview.scheduledAt).format('DD/MM/YYYY')}
+                                </span>
+                                <span className="text-slate-500 ml-3">{dayjs(interview.scheduledAt).format('hh:mm A')}</span>
+                            </div>
                         );
                     }
                 },

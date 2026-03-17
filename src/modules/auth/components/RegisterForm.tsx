@@ -5,7 +5,7 @@ import * as Yup from "yup";
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("El nombre es requerido"),
   lastName: Yup.string().required("El apellido es requerido"),
-  email: Yup.string().email("Correo inválido").required("El correo es requerido"),
+  username: Yup.string().required("El nombre de usuario es requerido"),
   password: Yup.string()
     .min(6, "La contraseña debe tener al menos 6 caracteres")
     .required("La contraseña es requerida"),
@@ -21,7 +21,7 @@ interface RegisterFormProps {
 const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
   return (
     <Formik
-      initialValues={{ name: "", lastName: "", email: "", password: "", confirmPassword: "" }}
+      initialValues={{ name: "", lastName: "", username: "", password: "", confirmPassword: "" }}
       validationSchema={validationSchema}
       onSubmit={(values) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -58,13 +58,13 @@ const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
             placeholder="Ingrese apellido"
           />
           <ITInput
-            label="Correo"
-            name="email"
-            value={values.email}
+            label="Usuario"
+            name="username"
+            value={values.username}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.email && errors.email ? errors.email : undefined}
-            placeholder="Ingrese correo"
+            error={touched.username && errors.username ? errors.username : undefined}
+            placeholder="Ingrese usuario"
           />
 
           <ITInput

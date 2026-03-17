@@ -144,7 +144,7 @@ const UsersPage = () => {
                                          <span>N/A</span>
                                     </div>
                                 </div>
-                            )
+                            );
                         }
                     }
                     return <span className="text-xs text-slate-300">-</span>;

@@ -13,8 +13,9 @@ export interface Interview {
   applicant?: any;
 }
 
-export const getInterviews = async (): Promise<TResult<Interview[]>> => {
-  return await get<Interview[]>(`/interviews`);
+export const getInterviews = async (vacancyId?: number): Promise<TResult<Interview[]>> => {
+  const query = vacancyId ? `?vacancyId=${vacancyId}` : "";
+  return await get<Interview[]>(`/interviews${query}`);
 };
 
 export const createInterview = async (data: Partial<Interview>): Promise<TResult<Interview>> => {

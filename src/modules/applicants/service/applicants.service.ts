@@ -11,8 +11,10 @@ export interface Applicant {
   experience: string | null;
   education: string | null;
   formData: any;
+  notes: string | null;
   vacancyId: number;
   vacancy?: any;
+  interviews?: any[];
 }
 
 export const getApplicants = async (vacancyId?: number): Promise<TResult<Applicant[]>> => {

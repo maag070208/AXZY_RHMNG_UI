@@ -10,9 +10,7 @@ import { logout } from "../store/auth/auth.slice";
 import store from "../store/store";
 
 const axiosInstance = axios.create({
-  // baseURL: 'http://localhost:4444/api/v1',
-  // baseURL: 'https://axzycheckapi-production.up.railway.app/api/v1',
-  baseURL: 'https://glorious-quietude-production-77ab.up.railway.app/api/v1',
+  baseURL: 'http://localhost:4444/api/v1',
   // timeout: 30000,
 });
 axiosInstance.interceptors.request.use(
@@ -45,7 +43,12 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401) {
       store.dispatch(logout());
 
-      if (window.location.hash !== "#/login") {
+      const currentHash = window.location.hash;
+      const isPublicRoute = currentHash.startsWith("#/login") || 
+                            currentHash.startsWith("#/register") || 
+                            currentHash.startsWith("#/apply");
+
+      if (!isPublicRoute) {
         window.location.hash = "#/login";
       }
     }
