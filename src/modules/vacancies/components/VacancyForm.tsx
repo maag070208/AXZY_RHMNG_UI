@@ -48,8 +48,8 @@ export const VacancyForm = ({ initialData, onSubmit, onCancel, isPage, onSaveDra
       slots: initialData?.slots?.map(s => ({
         id: s.id,
         date: s.startTime.split('T')[0],
-        startTime: new Date(s.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
-        endTime: new Date(s.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
+        startTime: new Date(s.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' }),
+        endTime: new Date(s.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' }),
         positions: s.positions
       })) || [],
     },

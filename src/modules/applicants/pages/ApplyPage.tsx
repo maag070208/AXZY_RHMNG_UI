@@ -99,7 +99,8 @@ const ApplyPage = () => {
         const dateKey = new Date(slot.startTime).toLocaleDateString('es-ES', { 
           weekday: 'long', 
           day: 'numeric', 
-          month: 'long' 
+          month: 'long',
+          timeZone: 'UTC'
         });
         if (!acc[dateKey]) acc[dateKey] = [];
         acc[dateKey].push(slot);
@@ -141,12 +142,14 @@ const ApplyPage = () => {
         weekday: 'long', 
         day: 'numeric', 
         month: 'long',
-        year: 'numeric'
+        year: 'numeric',
+        timeZone: 'UTC'
     }) : "";
     const appointmentTime = selectedSlot ? new Date(selectedSlot.startTime).toLocaleTimeString('es-ES', { 
         hour: '2-digit', 
         minute: '2-digit',
-        hour12: true 
+        hour12: true,
+        timeZone: 'UTC'
     }) : "";
 
     return (
@@ -348,7 +351,8 @@ const ApplyPage = () => {
                                      const start = new Date(slot.startTime).toLocaleTimeString([], { 
                                         hour: '2-digit', 
                                         minute: '2-digit',
-                                        hour12: true 
+                                        hour12: true,
+                                        timeZone: 'UTC'
                                      });
                                      
                                      return (

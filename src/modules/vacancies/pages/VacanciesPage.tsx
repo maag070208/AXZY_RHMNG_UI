@@ -286,8 +286,8 @@ const VacanciesPage = () => {
                         const slots = row.slots || [];
                         if (slots.length === 0) return <span className="text-gray-400">-</span>;
                         const first = slots[0];
-                        const start = new Date(first.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                        const end = new Date(first.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        const start = new Date(first.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
+                        const end = new Date(first.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
                         return (
                             <div className="flex flex-col">
                                 <span className="text-xs font-bold text-blue-600">{start} - {end}</span>
