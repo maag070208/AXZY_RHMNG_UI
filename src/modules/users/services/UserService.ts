@@ -1,40 +1,34 @@
-import { get, post, put } from "@app/core/axios/axios";
+import { get, post, put, remove } from "@app/core/axios/axios";
 import { TResult } from "@app/core/types/TResult";
 
-import { Schedule } from "../../schedules/SchedulesService";
 
 export interface User {
   id: number;
   name: string;
   lastName: string;
   username: string;
-  role: "ADMIN" | "OPERATOR" | "GUARD" | "SHIFT_GUARD" | "USER";
+  role: "ADMIN" | "OPERATOR" | "GUARD" | "SHIFT_GUARD" | "USER" | "MANTENIMIENTO";
   active: boolean;
   shiftStart?: string; // HH:mm
   shiftEnd?: string;   // HH:mm
   isLoggedIn?: boolean;
-  schedule?: Schedule;
-  scheduleId?: number;
 }
 
 export interface CreateUserDto {
   name: string;
   lastName: string;
   username: string;
-  password?: string;
   role: string;
   shiftStart?: string;
   shiftEnd?: string;
-  scheduleId?: number;
 }
 
 export interface UpdateUserDto {
     name?: string;
     lastName?: string;
-    username?: string;
+    role?: string;
     shiftStart?: string;
     shiftEnd?: string;
-    scheduleId?: number;
 }
 
 export interface ChangePasswordDto {
@@ -81,4 +75,8 @@ export const changePassword = async (id: number, data: ChangePasswordDto): Promi
 
 export const resetPassword = async (id: number, password: string): Promise<TResult<boolean>> => {
     return await put<boolean>(`/users/${id}/reset-password`, { newPassword: password });
+};
+
+export const deleteUser = async (id: number): Promise<TResult<boolean>> => {
+    return await remove<boolean>(`/users/${id}`);
 };

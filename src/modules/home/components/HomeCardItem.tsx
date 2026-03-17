@@ -1,4 +1,4 @@
-import { ITCard } from "axzy_ui_system";
+import { ITCard } from "@axzydev/axzy_ui_system";
 
 export const HomeCardItem = ({ item, index }: any) => {
   return (
@@ -9,8 +9,8 @@ export const HomeCardItem = ({ item, index }: any) => {
       key={index}
     >
       <div className="flex items-center space-x-4 w-full">
-        {/* Orange circular icon container */}
-        <div className="bg-teal-500 rounded-full p-3 flex items-center justify-center flex-shrink-0 w-12 h-12">
+        {/* Primary Color circular icon container */}
+        <div className="bg-[#065911] rounded-full p-3 flex items-center justify-center flex-shrink-0 w-12 h-12">
           {item.icon && <div className="text-2xl">{item.icon}</div>}
         </div>
         {/* Cyan text for module name to match sidebar */}

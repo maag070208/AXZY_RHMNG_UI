@@ -23,3 +23,23 @@
 body {
   background-color: #f6fbf4;
 }
+
+/* Global fix for green buttons contrast */
+[class*="bg-[#065911]"], 
+[class*="bg-primary-500"],
+[class*="bg-primary-600"],
+[class*="bg-primary-700"],
+[class*="bg-primary-800"],
+[class*="bg-primary-900"] {
+  color: #ffffff !important;
+}
+
+[class*="bg-[#065911]"] svg,
+[class*="bg-primary-500"] svg,
+[class*="bg-primary-600"] svg,
+[class*="bg-primary-700"] svg,
+[class*="bg-primary-800"] svg,
+[class*="bg-primary-900"] svg {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
