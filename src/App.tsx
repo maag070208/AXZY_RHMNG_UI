@@ -8,18 +8,14 @@ import "./App.css";
 import { PrivateRoutes } from "./core/routes/PrivateRoutes";
 import { setAuth } from "./core/store/auth/auth.slice";
 import HomePage from "./modules/home/pages/HomePage";
-
-import LocationsPage from "./modules/locations/pages/LocationsPage";
 import UsersPage from "./modules/users/pages/UsersPage";
-import IncidentsPage from "./modules/incidents/pages/IncidentsPage";
-import MaintenancesPage from "./modules/maintenances/pages/MaintenancesPage";
-import KardexPage from "./modules/kardex/pages/KardexPage";
-import RoundsPage from "./modules/rounds/pages/RoundsPage";
-import RoundDetailPage from "./modules/rounds/pages/RoundDetailPage";
-import SchedulesPage from "./modules/schedules/pages/SchedulesPage";
-import RoutesPage from "./modules/routes/pages/RoutesPage";
-import GuardsPage from "./modules/guards/pages/GuardsPage";
 
+import VacanciesPage from "./modules/vacancies/pages/VacanciesPage";
+import ApplicantsPage from "./modules/applicants/pages/ApplicantsPage";
+import InterviewsPage from "./modules/interviews/pages/InterviewsPage";
+
+// Public route for QR scanner application
+import ApplyPage from "./modules/applicants/pages/ApplyPage";
 
 function App() {
   const token = useSelector((state: any) => state.auth.token);
@@ -56,39 +52,31 @@ function App() {
     );
   }
 
-  if (!token) {
-    return (
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="*" element={<Navigate to="/login" />} />
-      </Routes>
-    );
-  }
-
+  // Rutas públicas que se pueden visualizar SIN tener sesión
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
-      <Route element={<PrivateRoutes />}>
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/guards" element={<GuardsPage />} />
-        
-        <Route path="/locations" element={<LocationsPage />} />
-        <Route path="/users" element={<UsersPage />} />
-        <Route path="/incidents" element={<IncidentsPage />} />
-        <Route path="/maintenances" element={<MaintenancesPage />} />
-        <Route path="/kardex" element={<KardexPage />} />
-        <Route path="/schedules" element={<SchedulesPage />} />
-        
-        <Route path="/rounds" element={<RoundsPage />} />
-        <Route path="/rounds/:id" element={<RoundDetailPage />} />
-        <Route path="/routes" element={<RoutesPage />} />
-        <Route path="/guards" element={<GuardsPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      
+      {/* Landing para escanear QR */}
+      <Route path="/apply/:qrToken" element={<ApplyPage />} />
 
-      </Route>
-      <Route path="*" element={<Navigate to="/home" />} />
+      {/* Rutas Privadas */}
+      {token ? (
+        <Route element={<PrivateRoutes />}>
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/vacancies" element={<VacanciesPage />} />
+          <Route path="/applicants" element={<ApplicantsPage />} />
+          <Route path="/interviews" element={<InterviewsPage />} />
+          <Route path="/users" element={<UsersPage />} />
+          <Route path="*" element={<Navigate to="/home" />} />
+        </Route>
+      ) : (
+        <Route path="*" element={<Navigate to="/login" />} />
+      )}
     </Routes>
   );
 }
 
 export default App;
+

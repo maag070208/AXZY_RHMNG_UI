@@ -12,7 +12,6 @@ interface Props {
   onSuccess: () => void;
 }
 
-import { getSchedules, Schedule } from "../../schedules/SchedulesService";
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -20,13 +19,9 @@ export const CreateUserWizard: React.FC<Props> = ({ userToEdit, onCancel, onSucc
   const isEditing = !!userToEdit;
   const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(0);
-  const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  React.useEffect(() => {
-    getSchedules().then(setSchedules);
-  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -38,7 +33,6 @@ export const CreateUserWizard: React.FC<Props> = ({ userToEdit, onCancel, onSucc
       role: userToEdit?.role || "OPERATOR",
       shiftStart: userToEdit?.shiftStart || "",
       shiftEnd: userToEdit?.shiftEnd || "",
-      scheduleId: userToEdit?.scheduleId ? String(userToEdit.scheduleId) : "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Requerido"),
@@ -53,11 +47,6 @@ export const CreateUserWizard: React.FC<Props> = ({ userToEdit, onCancel, onSucc
         .oneOf([Yup.ref("password")], "Las contraseñas no coinciden")
         .required("Requerido"),
         role: Yup.string().required("Requerido"),
-      scheduleId: Yup.string().when("role", {
-        is: (val: string) => val === "GUARD" || val === "SHIFT_GUARD" || val === "MANTENIMIENTO",
-        then: () => Yup.string().required("Requerido para guardias"),
-        otherwise: () => Yup.string().notRequired(),
-      }),
     }),
     onSubmit: async (values) => {
       let res;
@@ -65,10 +54,8 @@ export const CreateUserWizard: React.FC<Props> = ({ userToEdit, onCancel, onSucc
           res = await updateUser(userToEdit.id, {
             name: values.name,
             lastName: values.lastName,
-            username: values.username,
             role: values.role,
-            scheduleId: values.scheduleId ? Number(values.scheduleId) : undefined
-          });
+          } as any);
       } else {
           res = await createUser({
             name: values.name,
@@ -76,8 +63,7 @@ export const CreateUserWizard: React.FC<Props> = ({ userToEdit, onCancel, onSucc
             username: values.username,
             password: values.password,
             role: values.role,
-            scheduleId: values.scheduleId ? Number(values.scheduleId) : undefined
-          });
+          } as any);
       }
 
       if (res.success) {
@@ -176,28 +162,14 @@ export const CreateUserWizard: React.FC<Props> = ({ userToEdit, onCancel, onSucc
             value={formik.values.role}
             onChange={formik.handleChange}
             options={[
-              { label: "Guardia", value: "GUARD" },
-              { label: "Guardia de Turno", value: "SHIFT_GUARD" },
-              { label: "Mantenimiento", value: "MANTENIMIENTO" },
               { label: "Administrador", value: "ADMIN" },
+              { label: "Recursos Humanos", value: "RECURSOS_HUMANOS" },
+              { label: "Reclutador", value: "RECLUTADOR" },
             ]}
             error={formik.errors.role}
             touched={formik.touched.role}
           />
           
-          {(formik.values.role === 'GUARD' || formik.values.role === 'SHIFT_GUARD' || formik.values.role === 'MANTENIMIENTO') && (
-            <div className="mt-2 p-4 bg-slate-50 rounded-lg border border-slate-100">
-                <ITSelect
-                    label="Horario Asignado"
-                    name="scheduleId"
-                    value={formik.values.scheduleId}
-                    onChange={formik.handleChange}
-                    options={schedules.map(s => ({ label: `${s.name} (${s.startTime} - ${s.endTime})`, value: String(s.id) }))}
-                    error={formik.errors.scheduleId}
-                    touched={formik.touched.scheduleId}
-                />
-            </div>
-          )}
         </div>
       ),
     },
@@ -213,18 +185,6 @@ export const CreateUserWizard: React.FC<Props> = ({ userToEdit, onCancel, onSucc
             <span className="text-slate-900">{formik.values.username}</span>
             <span className="font-medium text-slate-600">Rol:</span>
             <span className="text-slate-900">{formik.values.role}</span>
-            {(formik.values.role === 'GUARD' || formik.values.role === 'SHIFT_GUARD' || formik.values.role === 'MANTENIMIENTO') && (
-                <>
-                    <span className="font-medium text-slate-600">Turno:</span>
-                    <span className="text-slate-900">
-                        {
-                            schedules.find(s => String(s.id) === formik.values.scheduleId) 
-                            ? `${schedules.find(s => String(s.id) === formik.values.scheduleId)?.startTime} - ${schedules.find(s => String(s.id) === formik.values.scheduleId)?.endTime}`
-                            : 'No seleccionado'
-                        }
-                    </span>
-                </>
-            )}
           </div>
           <div className="mt-4 p-3 bg-blue-50 text-blue-800 rounded-lg text-sm border border-blue-100">
              Por favor verifica que la información sea correcta antes de confirmar.

@@ -128,23 +128,23 @@ const UsersPage = () => {
                 sortable: false,
                 render: (row: User) => {
                     if ((row.role === 'GUARD' || row.role === 'SHIFT_GUARD' || row.role === 'MANTENIMIENTO')) {
-                        if (row.schedule) {
-                            return (
-                                <div className="flex flex-col gap-1">
-                                    <span className="text-sm font-medium text-slate-700">{row.schedule.name}</span>
-                                    <div className="flex items-center gap-1 text-slate-500 text-xs">
-                                         <FaClock className="text-slate-400" />
-                                         <span>{row.schedule.startTime} - {row.schedule.endTime}</span>
-                                    </div>
-                                </div>
-                            );
-                        } else if (row.shiftStart) {
+                        if (row.shiftStart) {
                              return (
                                 <div className="flex items-center gap-1 text-slate-600 text-xs font-medium bg-slate-50 px-2 py-1 rounded-lg border border-slate-100 w-fit">
                                     <FaClock className="text-slate-400" />
                                     <span>{row.shiftStart} - {row.shiftEnd}</span>
                                 </div>
                             );
+                        } else {
+                            return (
+                                <div className="flex flex-col gap-1">
+                                    <span className="text-sm font-medium text-slate-700">Turno</span>
+                                    <div className="flex items-center gap-1 text-slate-500 text-xs">
+                                         <FaClock className="text-slate-400" />
+                                         <span>N/A</span>
+                                    </div>
+                                </div>
+                            )
                         }
                     }
                     return <span className="text-xs text-slate-300">-</span>;

@@ -1,6 +1,6 @@
 import { AppState } from "@app/core/store/store";
 import { useEffect, useState } from "react";
-import { FaChild, FaListAlt, FaExclamationTriangle, FaBook, FaWrench, FaClock, FaRoute, FaUserShield } from "react-icons/fa";
+import { FaChild, FaListAlt, FaUserTie, FaUsers } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { HomeCardItem } from "../components/HomeCardItem";
@@ -19,41 +19,23 @@ const HomePage = () => {
 
     const cards = [
       {
-        title: "Ubicaciones",
-        description: "Gestionar espacios de estacionamiento",
+        title: "Vacantes",
+        description: "Gestionar ofertas de empleo",
         icon: <FaListAlt className="text-white" />,
-        action: () => navigate("/locations"),
+        action: () => navigate("/vacancies"),
       },
       {
-        title: "Incidencias",
-        description: "Reportes de incidencias",
-        icon: <FaExclamationTriangle className="text-white" />,
-        action: () => navigate("/incidents"),
+        title: "Candidatos",
+        description: "Seguimiento de aspirantes",
+        icon: <FaUsers className="text-white" />,
+        action: () => navigate("/applicants"),
       },
       {
-        title: "Kardex",
-        description: "Historial de movimientos",
-        icon: <FaBook className="text-white" />,
-        action: () => navigate("/kardex"),
-      },
-      {
-        title: "Mantenimiento",
-        description: "Reportes de mantenimiento",
-        icon: <FaWrench className="text-white" />,
-        action: () => navigate("/maintenances"),
-      },
-      {
-        title: "Historial de recorridos",
-        description: "Registro y control de recorridos",
-        icon: <FaClock className="text-white" />,
-        action: () => navigate("/rounds"),
-      },
-      {
-        title: "Guardias",
-        description: "Gestión de personal operativo",
-        icon: <FaUserShield className="text-white" />,
-        action: () => navigate("/guards"),
-      },
+        title: "Entrevistas",
+        description: "Programación de entrevistas",
+        icon: <FaUserTie className="text-white" />,
+        action: () => navigate("/interviews"),
+      }
     ];
 
     if (user.role === "ADMIN") {
@@ -63,18 +45,6 @@ const HomePage = () => {
               description: "Administrar usuarios del sistema",
               icon: <FaChild className="text-white" />,
               action: () => navigate("/users"),
-            },
-            {
-              title: "Horarios",
-              description: "Configurar turnos y horarios",
-              icon: <FaListAlt className="text-white" />,
-              action: () => navigate("/schedules"),
-            },
-            {
-              title: "Rutas",
-              description: "Configuración de rutas de recorridos",
-              icon: <FaRoute className="text-white" />,
-              action: () => navigate("/routes"),
             }
         );
     }
@@ -94,3 +64,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
